@@ -6,7 +6,7 @@ local MacLib = {
 	end
 }
 
---// Services
+
 local TweenService = MacLib.GetService("TweenService")
 local RunService = MacLib.GetService("RunService")
 local HttpService = MacLib.GetService("HttpService")
@@ -15,7 +15,7 @@ local UserInputService = MacLib.GetService("UserInputService")
 local Lighting = MacLib.GetService("Lighting")
 local Players = MacLib.GetService("Players")
 
---// Variables
+
 local isStudio = RunService:IsStudio()
 local LocalPlayer = Players.LocalPlayer
 
@@ -47,7 +47,7 @@ local assets = {
 
 local IconList
 
---// Functions
+
 local function GetGui()
 	local newGui = Instance.new("ScreenGui")
 	newGui.ScreenInsets = Enum.ScreenInsets.None
@@ -115,7 +115,7 @@ local function gl(i)
 	end
 end
 
---// Library Functions
+
 function MacLib:Window(Settings)
 	local WindowFunctions = {Settings = Settings}
 	if Settings.AcrylicBlur ~= nil then
@@ -256,7 +256,7 @@ function MacLib:Window(Settings)
 
 
 
-	-- New OpenButton logic
+	
 	local openButton = Instance.new("ImageButton")
 	openButton.Name = "OpenButton"
 	openButton.Image = Settings.OpenButtonImage or ""
@@ -302,7 +302,7 @@ function MacLib:Window(Settings)
 	end)
 
 	openButton.MouseButton1Click:Connect(function()
-		task.wait(0.1) -- Small delay to prevent drag from triggering click
+		task.wait(0.1) 
 		if not openButtonDragging then
 			base.Visible = true
 			openButton.Visible = false
@@ -965,7 +965,7 @@ function MacLib:Window(Settings)
 			end
 		end)
 
-		-- ✅ PREVENT CAMERA MOVEMENT ON MOBILE
+		
 		topbar.Active = true
 
 	elseif Settings.DragStyle == 2 then
@@ -989,7 +989,7 @@ function MacLib:Window(Settings)
 			end
 		end)
 
-		-- ✅ PREVENT CAMERA MOVEMENT ON MOBILE
+		
 		base.Active = true
 	end
 
@@ -1571,7 +1571,7 @@ function MacLib:Window(Settings)
 				tabImage.BorderSizePixel = 0
 				tabImage.Size = UDim2.fromOffset(20, 20)
 
-				-- Apply lucide icon atau image biasa
+				
 				local iconData = gl(Settings.Image)
 				tabImage.Image = iconData.Image
 				tabImage.ImageRectSize = iconData.ImageRectSize
@@ -1657,10 +1657,10 @@ function MacLib:Window(Settings)
 			elementsScrollingUIListLayout.Name = "ElementsScrollingUIListLayout"
 			elementsScrollingUIListLayout.Padding = UDim.new(0, 15)
 			elementsScrollingUIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-			-- TIDAK ADA FillDirection (default vertical)
+			
 			elementsScrollingUIListLayout.Parent = elementsScrolling
 
-			-- TIDAK ADA LEFT/RIGHT FRAME
+			
 
 			elementsScrolling.Parent = elements1
 
@@ -1691,7 +1691,7 @@ function MacLib:Window(Settings)
 				sectionUIStroke.Transparency = 0.95
 				sectionUIStroke.Parent = section
 
-				-- HEADER UNTUK COLLAPSIBLE
+				
 				local sectionHeader = Instance.new("TextButton")
 				sectionHeader.Name = "SectionHeader"
 				sectionHeader.FontFace = Font.new(assets.interFont, Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
@@ -1713,7 +1713,7 @@ function MacLib:Window(Settings)
 				headerPadding.PaddingRight = UDim.new(0, 20)
 				headerPadding.Parent = sectionHeader
 
-				-- ARROW ICON
+				
 				local arrowIcon = Instance.new("TextLabel")
 				arrowIcon.Name = "ArrowIcon"
 				arrowIcon.FontFace = Font.new(assets.interFont, Enum.FontWeight.Bold, Enum.FontStyle.Normal)
@@ -1727,7 +1727,7 @@ function MacLib:Window(Settings)
 				arrowIcon.BackgroundTransparency = 1
 				arrowIcon.Parent = sectionHeader
 
-				-- CONTENT CONTAINER
+				
 				local sectionContent = Instance.new("Frame")
 				sectionContent.Name = "SectionContent"
 				sectionContent.AutomaticSize = Enum.AutomaticSize.Y
@@ -1749,16 +1749,16 @@ function MacLib:Window(Settings)
 				sectionUIPadding.PaddingTop = UDim.new(0, Settings.Collapsible ~= false and 10 or 22)
 				sectionUIPadding.Parent = sectionContent
 
-				-- MAIN SECTION LAYOUT
+				
 				local mainSectionLayout = Instance.new("UIListLayout")
 				mainSectionLayout.SortOrder = Enum.SortOrder.LayoutOrder
 				mainSectionLayout.Parent = section
 
-				-- COLLAPSIBLE LOGIC
-				local collapsed = Settings.Opened == false -- ✅ DI LUAR fungsi toggleCollapse
-				local collapsing = false -- ✅ DI LUAR fungsi toggleCollapse
+				
+				local collapsed = Settings.Opened == false 
+				local collapsing = false 
 
-				-- Set initial state (sebelum fungsi toggleCollapse)
+				
 				if collapsed then
 					sectionContent.Visible = false
 					sectionContent.Size = UDim2.new(1, 0, 0, 0)
@@ -1766,7 +1766,7 @@ function MacLib:Window(Settings)
 					arrowIcon.TextTransparency = 0.7
 				end
 
-				-- PATCH: Monitor perubahan ukuran content
+				
 				local function updateSectionSize()
 					if not collapsed then
 						task.spawn(function()
@@ -1778,24 +1778,24 @@ function MacLib:Window(Settings)
 					end
 				end
 
-				-- PATCH: Connect to layout changes
+				
 				sectionUIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 					updateSectionSize()
 				end)
 
 				local function toggleCollapse()
-					if collapsing then return end -- ✅ Guard clause
+					if collapsing then return end 
 					collapsing = true
-					collapsed = not collapsed -- ✅ Toggle state yang sudah ada di luar
+					collapsed = not collapsed 
 
-					-- Animate arrow
+					
 					local targetRotation = collapsed and -90 or 0
 					Tween(arrowIcon, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
 						Rotation = targetRotation,
 						TextTransparency = collapsed and 0.7 or 0.5
 					}):Play()
 
-					-- Animate content visibility
+					
 					if collapsed then
 						local contentTween = Tween(sectionContent, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
 							Size = UDim2.new(1, 0, 0, 0)
@@ -1824,7 +1824,7 @@ function MacLib:Window(Settings)
 				if Settings.Collapsible ~= false then
 					sectionHeader.MouseButton1Click:Connect(toggleCollapse)
 
-					-- Hover effect
+					
 					sectionHeader.MouseEnter:Connect(function()
 						Tween(sectionHeader, TweenInfo.new(0.15, Enum.EasingStyle.Sine), {
 							TextTransparency = 0.1
@@ -2135,7 +2135,7 @@ function MacLib:Window(Settings)
 					sliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
 					sliderValue.TextSize = 12
 					sliderValue.TextTransparency = 0.1
-					--sliderValue.TextTruncate = Enum.TextTruncate.AtEnd
+					
 					sliderValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					sliderValue.BackgroundTransparency = 0.95
 					sliderValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -2209,10 +2209,10 @@ function MacLib:Window(Settings)
 					local dragging = false
 
 					local DisplayMethods = {
-						Hundredths = function(sliderValue) -- Deprecated use Settings.Precision
+						Hundredths = function(sliderValue) 
 							return string.format("%.2f", sliderValue)
 						end,
-						Tenths = function(sliderValue) -- Deprecated use Settings.Precision
+						Tenths = function(sliderValue) 
 							return string.format("%.1f", sliderValue)
 						end,
 						Round = function(sliderValue, precision)
@@ -4390,7 +4390,7 @@ function MacLib:Window(Settings)
 					slider.InputBegan:Connect(function(input)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 							SlideDown = true
-							UpdateSlide(input.Position) -- Langsung pakai input.Position
+							UpdateSlide(input.Position) 
 						end
 					end)
 
@@ -4408,7 +4408,7 @@ function MacLib:Window(Settings)
 
 					UserInputService.InputChanged:Connect(function(input)
 						if SlideDown and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-							UpdateSlide(input.Position) -- Langsung pakai input.Position
+							UpdateSlide(input.Position) 
 						end
 					end)
 
@@ -4630,7 +4630,7 @@ function MacLib:Window(Settings)
 					labelText.Name = "LabelText"
 					labelText.FontFace = Font.new(assets.interFont)
 					labelText.RichText = true
-					labelText.Text = LabelFunctions.Settings.Title or LabelFunctions.Settings.Name -- Settings.Name Deprecated use Settings.Text
+					labelText.Text = LabelFunctions.Settings.Title or LabelFunctions.Settings.Name 
 					labelText.TextColor3 = Color3.fromRGB(255, 255, 255)
 					labelText.TextSize = 14
 					labelText.TextTransparency = 0.5
@@ -4674,7 +4674,7 @@ function MacLib:Window(Settings)
 					subLabelText.Name = "SubLabelText"
 					subLabelText.FontFace = Font.new(assets.interFont)
 					subLabelText.RichText = true
-					subLabelText.Text = SubLabelFunctions.Settings.Title or SubLabelFunctions.Settings.Name -- Settings.Name Deprecated use Settings.Text
+					subLabelText.Text = SubLabelFunctions.Settings.Title or SubLabelFunctions.Settings.Name 
 					subLabelText.TextColor3 = Color3.fromRGB(255, 255, 255)
 					subLabelText.TextSize = 12
 					subLabelText.TextTransparency = 0.7
@@ -4988,7 +4988,7 @@ function MacLib:Window(Settings)
 		end,
 	})
 
-	-- NEW: Delete Config Button
+	
 	configSection:Button({
 		Title = "Delete Config",
 		Callback = function()
@@ -5006,7 +5006,7 @@ function MacLib:Window(Settings)
 				Desc = string.format("Deleted config %q", configSelection.Value),
 			})
 
-			-- Refresh list dan clear selection setelah delete
+			
 			configSelection:ClearOptions()
 			configSelection:SetValues(MacLib:RefreshConfigList())
 		end,
@@ -5044,7 +5044,7 @@ function MacLib:Window(Settings)
 		end,
 	})
 
-	-- NEW: Reset Autoload Button
+	
 	configSection:Button({
 		Title = "Reset autoload",
 		Callback = function()
@@ -5065,7 +5065,7 @@ function MacLib:Window(Settings)
 		end,
 	})
 
-	-- Autoload Label
+	
 	autoloadLabel = configSection:Label({Title = "Autoload config: None"})
 
 	if isfile(MacLib.Folder .. "/settings/autoload.txt") then
